@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Titanic Survival Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .prediction {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+        .error {
+            color: red;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #ffe6e6;
+        }
+        .helper-text {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Titanic Survival Prediction</h1>
+    
+    {% if error %}
+    <div class="error">
+        {{ error }}
+    </div>
+    {% endif %}
+    
+    <form action="/predict" method="post">
+        <div class="form-group">
+            <label>Passenger Class:</label>
+            <input type="number" name="pclass" required min="1" max="3">
+            <div class="helper-text">Enter 1 (First), 2 (Second), or 3 (Third) class</div>
+        </div>
+        <div class="form-group">
+            <label>Sex:</label>
+            <input type="number" name="sex" required min="0" max="1">
+            <div class="helper-text">Enter 0 for male, 1 for female</div>
+        </div>
+        <div class="form-group">
+            <label>Age:</label>
+            <input type="number" name="age" required min="0" max="100" step="0.1">
+            <div class="helper-text">Enter age in years</div>
+        </div>
+        <div class="form-group">
+            <label>Fare:</label>
+            <input type="number" name="fare" required min="0" step="0.01">
+            <div class="helper-text">Enter ticket fare in pounds</div>
+        </div>
+        <div class="form-group">
+            <label>Embarked:</label>
+            <input type="number" name="embarked" required min="0" max="2">
+            <div class="helper-text">Enter 0 (Cherbourg), 1 (Queenstown), or 2 (Southampton)</div>
+        </div>
+        <div class="form-group">
+            <label>Title:</label>
+            <input type="number" name="title" required min="1" max="5">
+            <div class="helper-text">Enter 1 (Mr), 2 (Miss), 3 (Mrs), 4 (Master), or 5 (Other)</div>
+        </div>
+        <div class="form-group">
+            <label>Family Size:</label>
+            <input type="number" name="family_size" required min="1">
+            <div class="helper-text">Enter total number of family members (including self)</div>
+        </div>
+        <button type="submit">Predict</button>
+    </form>
+    
+    {% if lr_prediction %}
+    <div class="prediction">
+        <h2>Predictions:</h2>
+        <p>{{ lr_prediction }}</p>
+        <p>{{ dt_prediction }}</p>
+    </div>
+    {% endif %}
+</body>
+</html>
